@@ -3,15 +3,15 @@ import { filter } from 'lodash'
 
 import { DeleteOutlined } from '@ant-design/icons'
 
-import { GET_CONTACTS, REMOVE_CONTACT } from '../../queries'
+import { GET_PEOPLE, REMOVE_PERSON } from '../../queries'
 
 const RemoveContact = props => {
   const { id } = props
-  const [removeContact] = useMutation(REMOVE_CONTACT, {
+  const [removeContact] = useMutation(REMOVE_PERSON, {
     update(cache, { data: { removeContact } }) {
-      const { contacts } = cache.readQuery({ query: GET_CONTACTS })
+      const { contacts } = cache.readQuery({ query: GET_PEOPLE })
       cache.writeQuery({
-        query: GET_CONTACTS,
+        query: GET_PEOPLE,
         data: {
           contacts: filter(contacts, c => c.id !== removeContact.id)
         }

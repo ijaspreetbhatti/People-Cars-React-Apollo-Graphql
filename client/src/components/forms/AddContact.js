@@ -5,11 +5,11 @@ import { Form, Input, Button } from 'antd'
 
 import { v4 as uuidv4 } from 'uuid'
 
-import { ADD_CONTACT, GET_CONTACTS } from '../../queries'
+import { ADD_PERSON, GET_PEOPLE } from '../../queries'
 
 const AddContact = () => {
   const [id] = useState(uuidv4())
-  const [addContact] = useMutation(ADD_CONTACT)
+  const [addContact] = useMutation(ADD_PERSON)
 
   const [form] = Form.useForm()
   const [, forceUpdate] = useState()
@@ -29,9 +29,9 @@ const AddContact = () => {
         lastName
       },
       update: (proxy, { data: { addContact } }) => {
-        const data = proxy.readQuery({ query: GET_CONTACTS })
+        const data = proxy.readQuery({ query: GET_PEOPLE })
         proxy.writeQuery({
-          query: GET_CONTACTS,
+          query: GET_PEOPLE,
           data: {
             ...data,
             contacts: [...data.contacts, addContact]
