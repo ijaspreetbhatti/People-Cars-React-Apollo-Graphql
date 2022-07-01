@@ -16,7 +16,7 @@ const App = () => (
     <div className='App'>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:type/:id" element={<Show />} />
+        <Route path="/people/:id" element={<Show />} />
       </Routes>
     </div>
   </ApolloProvider>
