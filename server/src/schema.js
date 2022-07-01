@@ -52,7 +52,7 @@ const resolvers = {
     },
     personWithCars(parent, args, context, info) {
       const person = find(people, { id: args.id });
-      const cars = find(cars, (car) => person.cars.includes(car.id));
+      const cars = find(cars, (car) => person.id === car.personId);
       return { ...person, cars };
     },
     cars: () => cars,
@@ -88,7 +88,7 @@ const resolvers = {
         throw new Error(`Couldn't find person with id ${args.id}`)
       }
 
-      remove(cars, (car) => args.ids.includes(car.id))
+      remove(cars, (car) => car.personId === args.id)
 
       remove(people, { id: args.id })
 
@@ -105,9 +105,6 @@ const resolvers = {
       }
 
       cars.push(newCar)
-
-      const person = find(people, { id: args.personId })
-      person.cars.push(args.id)
 
       return newCar
     },
