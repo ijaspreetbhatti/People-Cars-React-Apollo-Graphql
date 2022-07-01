@@ -11,7 +11,7 @@ const typeDefs = gql`
 
   type Query {
     person(id: String!): People
-    contacts: [People]
+    people: [People]
   }
 
   type Mutation {
@@ -30,12 +30,12 @@ const resolvers = {
   },
   Mutation: {
     addPerson(root, args) {
-      const newContact = {
+      const newPerson = {
         id: args.id,
         firstName: args.firstName,
         lastName: args.lastName
       }
-      people.push(newContact)
+      people.push(newPerson)
 
       return newPerson
     },
