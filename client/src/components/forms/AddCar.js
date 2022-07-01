@@ -11,8 +11,7 @@ import { Select } from 'antd';
 
 const { Option } = Select;
 
-const AddPerson = (props) => {
-  const [id] = useState(uuidv4())
+const AddCar = (props) => {
   const [addCar] = useMutation(ADD_CAR)
 
   const [form] = Form.useForm()
@@ -34,7 +33,7 @@ const AddPerson = (props) => {
 
     addCar({
       variables: {
-        id,
+        id: uuidv4(),
         year: Number(year),
         make,
         model,
@@ -115,4 +114,4 @@ const AddPerson = (props) => {
   )
 }
 
-export default AddPerson
+export default AddCar

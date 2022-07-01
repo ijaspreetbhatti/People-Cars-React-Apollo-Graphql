@@ -24,7 +24,7 @@ const AddPerson = () => {
 
     addPerson({
       variables: {
-        id,
+        id: uuidv4(),
         firstName,
         lastName
       },
@@ -34,7 +34,7 @@ const AddPerson = () => {
           query: GET_PEOPLE,
           data: {
             ...data,
-            peopls: [...data.peopls, addPerson]
+            people: [...data.people, addPerson]
           }
         })
       }

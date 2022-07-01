@@ -28,7 +28,7 @@ const Home = (props) => {
                             data.people.length > 0 ? <>
                                 <Title title={"Cars"} />
                                 <AddCar people={data.people} />
-                                <Cars />
+                                <Cars people={data.people} />
                             </> : null
                         )
                     )

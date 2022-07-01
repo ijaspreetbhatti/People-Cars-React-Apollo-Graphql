@@ -56,6 +56,9 @@ const Car = props => {
     return formatter.format(price);
   }
 
+  const person = props.people.find(person => person.id === personId);
+  const personName = person ? person.firstName + ' ' + person.lastName : '';
+
   return (
     <div>
       {editMode ? (
@@ -66,6 +69,7 @@ const Car = props => {
           model={props.model}
           price={props.price}
           personId={props.personId}
+          people={props.people}
           onButtonClick={handleButtonClick}
           updateStateVariable={updateStateVariable}
         />
@@ -76,8 +80,7 @@ const Car = props => {
             <RemoveCar id={id} />
           ]}
           style={styles.card}
-        >
-          {year} {make} {model} <b>{getFormattedCurrency(price)}</b>
+        > <b>{personName}</b> owns {year} {make} {model} which costs <b>{getFormattedCurrency(price)}</b>
         </Card>
       )}
     </div>

@@ -1,8 +1,10 @@
 import { useQuery } from '@apollo/client'
+import { useState } from 'react'
 import { GET_CARS } from '../../queries'
 
 import { List } from 'antd'
 import Car from '../listItems/Car'
+
 
 const getStyles = () => ({
   list: {
@@ -11,7 +13,8 @@ const getStyles = () => ({
   }
 })
 
-const Cars = () => {
+const Cars = (props) => {
+  const [people, setPeople] = useState(props.people);
   const styles = getStyles()
 
   const { loading, error, data } = useQuery(GET_CARS)
@@ -36,6 +39,7 @@ const Cars = () => {
             model={model}
             price={price}
             personId={personId}
+            people={people}
           />
         </List.Item>
       ))}

@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Select } from 'antd'
 
-import { UPDATE_PERSON } from '../../queries'
+import { UPDATE_CAR } from '../../queries'
 
-const UpdatePerson = props => {
+const { Option } = Select;
+
+const UpdateCar = props => {
   const [id] = useState(props.id)
-  const [firstName, setFirstName] = useState(props.firstName)
-  const [lastName, setLastName] = useState(props.lastName)
-  const [updateContact] = useMutation(UPDATE_PERSON)
+  const [year, setYear] = useState(props.year)
+  const [make, setMake] = useState(props.make)
+  const [model, setModel] = useState(props.model)
+  const [price, setPrice] = useState(props.price)
+  const [personId, setPersonId] = useState(props.personId)
+
+  const [updateContact] = useMutation(UPDATE_CAR)
 
   const [form] = Form.useForm()
   const [, forceUpdate] = useState()
@@ -18,13 +24,22 @@ const UpdatePerson = props => {
   }, [])
 
   const onFinish = values => {
-    const { firstName, lastName } = values
+    const {
+      year,
+      make,
+      model,
+      price,
+      personId
+    } = values
 
     updateContact({
       variables: {
         id,
-        firstName,
-        lastName
+        year: Number(year),
+        make,
+        model,
+        price: Number(price),
+        personId
       }
     })
 
@@ -34,11 +49,20 @@ const UpdatePerson = props => {
   const updateStateVariable = (variable, value) => {
     props.updateStateVariable(variable, value)
     switch (variable) {
-      case 'firstName':
-        setFirstName(value)
+      case 'year':
+        setYear(value)
         break
-      case 'lastName':
-        setLastName(value)
+      case 'make':
+        setMake(value)
+        break
+      case 'model':
+        setModel(value)
+        break
+      case 'price':
+        setPrice(value)
+        break
+      case 'personId':
+        setPersonId(value)
         break
       default:
         break
@@ -48,31 +72,50 @@ const UpdatePerson = props => {
   return (
     <Form
       form={form}
-      name='update-contact-form'
+      name='update-car-form'
       layout='inline'
       onFinish={onFinish}
       initialValues={{
-        firstName: firstName,
-        lastName: lastName
+        year,
+        make,
+        model,
+        price,
+        personId
       }}
     >
       <Form.Item
-        name='firstName'
-        rules={[{ required: true, message: 'Please input your first name!' }]}
+        name='year'
+        rules={[{ required: true, message: 'Please input year!' }]}
       >
-        <Input
-          placeholder='i.e. John'
-          onChange={e => updateStateVariable('firstName', e.target.value)}
-        />
+        <Input placeholder='i.e. 2017' type={"number"} min="1900" max="2099" onChange={e => updateStateVariable('year', e.target.value)} />
       </Form.Item>
       <Form.Item
-        name='lastName'
-        rules={[{ required: true, message: 'Please input your last name!' }]}
+        name='make'
+        rules={[{ required: true, message: 'Please input car make!' }]}
       >
-        <Input
-          placeholder='i.e. Smith'
-          onChange={e => updateStateVariable('lastName', e.target.value)}
-        />
+        <Input placeholder='i.e. Honda' onChange={e => updateStateVariable('make', e.target.value)} />
+      </Form.Item>
+      <Form.Item
+        name='model'
+        rules={[{ required: true, message: 'Please input car model!' }]}
+      >
+        <Input placeholder='i.e. Civic SI' onChange={e => updateStateVariable('model', e.target.value)} />
+      </Form.Item>
+      <Form.Item
+        name='price'
+        rules={[{ required: true, message: 'Please input price!' }]}
+      >
+        <Input placeholder='i.e 30000' type={"number"} min={.00} step={1.00} onChange={e => updateStateVariable('price', e.target.value)} />
+      </Form.Item>
+      <Form.Item
+        name='personId'
+        rules={[{ required: true, message: 'Please choose the owner!' }]}
+      >
+        <Select style={{ width: 150 }} onSelect={e => updateStateVariable('personId', e)}>
+          {props.people.map(person => (
+            <Option key={person.id} value={person.id}>{person.firstName + ' ' + person.lastName}</Option>
+          ))}
+        </Select>
       </Form.Item>
       <Form.Item shouldUpdate={true}>
         {() => (
@@ -80,7 +123,12 @@ const UpdatePerson = props => {
             type='primary'
             htmlType='submit'
             disabled={
-              (!form.isFieldTouched('firstName') && !form.isFieldTouched('lastName')) ||
+              (
+                !form.isFieldTouched('year') &&
+                !form.isFieldTouched('make') &&
+                !form.isFieldTouched('model') &&
+                !form.isFieldTouched('price') &&
+                !form.isFieldTouched('personId')) ||
               form.getFieldsError().filter(({ errors }) => errors.length).length
             }
           >
@@ -93,4 +141,4 @@ const UpdatePerson = props => {
   )
 }
 
-export default UpdatePerson
+export default UpdateCar
