@@ -44,7 +44,7 @@ const AddPerson = () => {
   return (
     <Form
       form={form}
-      name='add-contact-form'
+      name='add-person-form'
       layout='inline'
       onFinish={onFinish}
       size='large'

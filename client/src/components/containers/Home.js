@@ -4,8 +4,15 @@ import AddPerson from '../forms/AddPerson'
 import Cars from '../lists/Cars'
 import AddCar from '../forms/AddCar'
 import { Divider } from 'antd'
+import { GET_PEOPLE } from '../../queries'
+import { useQuery } from '@apollo/client'
 
 const Home = (props) => {
+
+    const { loading, error, data } = useQuery(GET_PEOPLE)
+    if (loading) return 'Loading...'
+    if (error) return `Error! ${error.message}`
+
     return (
         <>
             <Title />
@@ -14,9 +21,19 @@ const Home = (props) => {
             <AddPerson />
             <People />
             <Divider />
-            <Title title={"Cars"} />
-            <AddCar />
-            <Cars />
+            {
+                loading ? 'Loading...' : (
+                    error ? `Error! ${error.message}` : (
+                        (
+                            data.people.length > 0 ? <>
+                                <Title title={"Cars"} />
+                                <AddCar people={data.people} />
+                                <Cars />
+                            </> : null
+                        )
+                    )
+                )
+            }
         </>
     );
 }

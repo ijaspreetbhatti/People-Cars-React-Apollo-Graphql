@@ -8,7 +8,7 @@ const UpdatePerson = props => {
   const [id] = useState(props.id)
   const [firstName, setFirstName] = useState(props.firstName)
   const [lastName, setLastName] = useState(props.lastName)
-  const [updateContact] = useMutation(UPDATE_PERSON)
+  const [updatePerson] = useMutation(UPDATE_PERSON)
 
   const [form] = Form.useForm()
   const [, forceUpdate] = useState()
@@ -20,7 +20,7 @@ const UpdatePerson = props => {
   const onFinish = values => {
     const { firstName, lastName } = values
 
-    updateContact({
+    updatePerson({
       variables: {
         id,
         firstName,
@@ -48,7 +48,7 @@ const UpdatePerson = props => {
   return (
     <Form
       form={form}
-      name='update-contact-form'
+      name='update-person-form'
       layout='inline'
       onFinish={onFinish}
       initialValues={{
@@ -84,7 +84,7 @@ const UpdatePerson = props => {
               form.getFieldsError().filter(({ errors }) => errors.length).length
             }
           >
-            Update Contact
+            Update Person
           </Button>
         )}
       </Form.Item>
