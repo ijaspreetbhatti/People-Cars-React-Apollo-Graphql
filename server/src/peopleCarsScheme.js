@@ -1,4 +1,4 @@
-const people = [
+export const people = [
   {
     id: '1',
     firstName: 'Bill',
@@ -16,7 +16,7 @@ const people = [
   }
 ]
 
-const cars = [
+export const cars = [
   {
     id: '1',
     year: '2019',
