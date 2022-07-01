@@ -20,6 +20,7 @@ const Car = props => {
   const [price, setPrice] = useState(props.price);
   const [personId, setPersonId] = useState(props.personId);
   const [editMode, setEditMode] = useState(false)
+  const [cardType, setCardType] = useState(props.cardType || null)
 
   const handleButtonClick = () => {
     setEditMode(!editMode)
@@ -75,6 +76,7 @@ const Car = props => {
         />
       ) : (
         <Card
+          type={cardType}
           actions={[
             <EditOutlined key='edit' onClick={handleButtonClick} />,
             <RemoveCar id={id} />

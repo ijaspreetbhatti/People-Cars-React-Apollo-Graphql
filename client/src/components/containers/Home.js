@@ -10,8 +10,6 @@ import { useQuery } from '@apollo/client'
 const Home = (props) => {
 
     const { loading, error, data } = useQuery(GET_PEOPLE)
-    if (loading) return 'Loading...'
-    if (error) return `Error! ${error.message}`
 
     return (
         <>

@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express'
-import { find, remove } from 'lodash'
+import { find, remove, filter } from 'lodash'
 import { people, cars } from './peopleCarsScheme'
 
 const typeDefs = gql`
@@ -30,8 +30,8 @@ const typeDefs = gql`
     person(id: String!): People
     people: [People]
     car(id: String!): Cars
+    carsByPersonId(personId: String!): [Cars]
     cars: [Cars]
-    personWithCars(id: String!): [PersonWithCars]
   }
 
   type Mutation {
@@ -50,14 +50,17 @@ const resolvers = {
     person(parent, args, context, info) {
       return find(people, { id: args.id })
     },
-    personWithCars(parent, args, context, info) {
-      const person = find(people, { id: args.id });
-      const cars = find(cars, (car) => person.id === car.personId);
-      return { ...person, cars };
-    },
+    // personWithCars(parent, args, context, info) {
+    //   const person = find(people, { id: args.id });
+    //   const cars = find(cars, (car) => person.id === car.personId);
+    //   return { ...person, cars };
+    // },
     cars: () => cars,
     car(parent, args, context, info) {
       return find(cars, { id: args.id })
+    },
+    carsByPersonId(parent, args, context, info) {
+      return filter(cars, { personId: args.personId })
     }
   },
   Mutation: {
