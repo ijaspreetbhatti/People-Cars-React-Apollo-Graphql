@@ -16,6 +16,7 @@ const Show = (props) => {
     const { id } = useParams();
 
     const { loading, error, data } = useQuery(GET_PERSON_WITH_CARS, { variables: { id } });
+    console.log(data)
 
     return (
         <Card
@@ -43,7 +44,7 @@ const Show = (props) => {
                                         make={car.make}
                                         model={car.model}
                                         price={car.price}
-                                        personId={car.personId} />
+                                        personId={data.person.id} />
                                 )
                                 )}
 

@@ -18,6 +18,7 @@ const Car = props => {
   const [make, setMake] = useState(props.make);
   const [model, setModel] = useState(props.model);
   const [price, setPrice] = useState(props.price);
+  const [people, setPeople] = useState(props.people);
   const [personId, setPersonId] = useState(props.personId);
   const [editMode, setEditMode] = useState(false)
   const [cardType, setCardType] = useState(props.cardType || null)
@@ -57,7 +58,7 @@ const Car = props => {
     return formatter.format(price);
   }
 
-  const person = props.people.find(person => person.id === personId);
+  const person = people.find(person => person.id === personId);
   const personName = person ? person.firstName + ' ' + person.lastName : '';
 
   return (
@@ -70,7 +71,7 @@ const Car = props => {
           model={props.model}
           price={props.price}
           personId={props.personId}
-          people={props.people}
+          people={people}
           onButtonClick={handleButtonClick}
           updateStateVariable={updateStateVariable}
         />
