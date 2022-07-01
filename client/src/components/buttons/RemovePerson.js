@@ -5,15 +5,15 @@ import { DeleteOutlined } from '@ant-design/icons'
 
 import { GET_PEOPLE, REMOVE_PERSON } from '../../queries'
 
-const RemoveContact = props => {
+const RemovePerson = props => {
   const { id } = props
-  const [removeContact] = useMutation(REMOVE_PERSON, {
-    update(cache, { data: { removeContact } }) {
+  const [removePerson] = useMutation(REMOVE_PERSON, {
+    update(cache, { data: { removePerson } }) {
       const { contacts } = cache.readQuery({ query: GET_PEOPLE })
       cache.writeQuery({
         query: GET_PEOPLE,
         data: {
-          contacts: filter(contacts, c => c.id !== removeContact.id)
+          contacts: filter(contacts, c => c.id !== removePerson.id)
         }
       })
     }
@@ -23,7 +23,7 @@ const RemoveContact = props => {
     let result = window.confirm('Are you sure you want to remove this contact?')
 
     if (result) {
-      removeContact({
+      removePerson({
         variables: {
           id
         }
@@ -34,4 +34,4 @@ const RemoveContact = props => {
   return <DeleteOutlined key='delete' onClick={handleButtonClick} style={{ color: 'red' }} />
 }
 
-export default RemoveContact
+export default RemovePerson

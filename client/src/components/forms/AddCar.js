@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { ADD_PERSON, GET_PEOPLE } from '../../queries'
 
-const AddContact = () => {
+const AddPerson = () => {
   const [id] = useState(uuidv4())
   const [addContact] = useMutation(ADD_PERSON)
 
@@ -80,4 +80,4 @@ const AddContact = () => {
   )
 }
 
-export default AddContact
+export default AddPerson

@@ -4,7 +4,7 @@ import { Button, Form, Input } from 'antd'
 
 import { UPDATE_PERSON } from '../../queries'
 
-const UpdateContact = props => {
+const UpdatePerson = props => {
   const [id] = useState(props.id)
   const [firstName, setFirstName] = useState(props.firstName)
   const [lastName, setLastName] = useState(props.lastName)
@@ -93,4 +93,4 @@ const UpdateContact = props => {
   )
 }
 
-export default UpdateContact
+export default UpdatePerson

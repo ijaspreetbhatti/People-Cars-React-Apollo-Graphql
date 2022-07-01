@@ -1,9 +1,10 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import './App.css'
 import 'antd/dist/antd.css'
-import Title from './components/layout/Title'
-import Contacts from './components/lists/Contacts'
-import AddContact from './components/forms/AddContact'
+import Home from './components/containers/Home'
+import Show from './components/containers/Show'
+import { Route, Routes } from 'react-router-dom'
+
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -13,9 +14,10 @@ const client = new ApolloClient({
 const App = () => (
   <ApolloProvider client={client}>
     <div className='App'>
-      <Title />
-      <AddContact />
-      <Contacts />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/:type/:id" element={<Show />} />
+      </Routes>
     </div>
   </ApolloProvider>
 )
