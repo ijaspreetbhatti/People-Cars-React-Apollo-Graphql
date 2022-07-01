@@ -3,7 +3,9 @@ import { Card } from 'antd'
 import RemovePerson from '../buttons/RemovePerson'
 
 import { EditOutlined } from '@ant-design/icons'
-import UpdateContact from '../forms/UpdatePerson'
+import UpdatePerson from '../forms/UpdatePerson'
+import { Link } from 'react-router-dom'
+import Show from '../containers/Show'
 
 const getStyles = () => ({
   card: {
@@ -11,7 +13,7 @@ const getStyles = () => ({
   }
 })
 
-const Contact = props => {
+const Person = props => {
   const styles = getStyles()
   const [id] = useState(props.id)
   const [firstName, setFirstName] = useState(props.firstName)
@@ -38,7 +40,7 @@ const Contact = props => {
   return (
     <div>
       {editMode ? (
-        <UpdateContact
+        <UpdatePerson
           id={props.id}
           firstName={props.firstName}
           lastName={props.lastName}
@@ -48,6 +50,11 @@ const Contact = props => {
       ) : (
         <Card
           actions={[
+            <Link
+              to={{ pathname: `people/${id}` }}
+              element={<Show />}>
+              <div>Learn More</div>
+            </Link>,
             <EditOutlined key='edit' onClick={handleButtonClick} />,
             <RemovePerson id={id} />
           ]}
@@ -60,4 +67,4 @@ const Contact = props => {
   )
 }
 
-export default Contact
+export default Person

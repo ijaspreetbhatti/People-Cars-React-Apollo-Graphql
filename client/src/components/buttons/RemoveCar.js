@@ -3,17 +3,17 @@ import { filter } from 'lodash'
 
 import { DeleteOutlined } from '@ant-design/icons'
 
-import { GET_PEOPLE, REMOVE_PERSON } from '../../queries'
+import { GET_CARS, REMOVE_CAR } from '../../queries'
 
-const RemovePerson = props => {
+const RemoveCar = props => {
   const { id } = props
-  const [removePerson] = useMutation(REMOVE_PERSON, {
-    update(cache, { data: { removePerson } }) {
-      const { people } = cache.readQuery({ query: GET_PEOPLE })
+  const [removeCar] = useMutation(REMOVE_CAR, {
+    update(cache, { data: { removeCar } }) {
+      const { cars } = cache.readQuery({ query: GET_CARS })
       cache.writeQuery({
-        query: GET_PEOPLE,
+        query: GET_CARS,
         data: {
-          people: filter(people, c => c.id !== removePerson.id)
+          cars: filter(cars, c => c.id !== removeCar.id)
         }
       })
     }
@@ -23,7 +23,7 @@ const RemovePerson = props => {
     let result = window.confirm('Are you sure you want to remove this contact?')
 
     if (result) {
-      removePerson({
+      removeCar({
         variables: {
           id
         }
@@ -34,4 +34,4 @@ const RemovePerson = props => {
   return <DeleteOutlined key='delete' onClick={handleButtonClick} style={{ color: 'red' }} />
 }
 
-export default RemovePerson
+export default RemoveCar

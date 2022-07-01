@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Card } from 'antd'
-import RemovePerson from '../buttons/RemovePerson'
+import RemoveCar from '../buttons/RemoveCar'
 
 import { EditOutlined } from '@ant-design/icons'
-import UpdatePerson from '../forms/UpdatePerson'
+import UpdateCar from '../forms/UpdateCar'
 
 const getStyles = () => ({
   card: {
@@ -11,11 +11,14 @@ const getStyles = () => ({
   }
 })
 
-const Person = props => {
+const Car = props => {
   const styles = getStyles()
   const [id] = useState(props.id)
-  const [firstName, setFirstName] = useState(props.firstName)
-  const [lastName, setLastName] = useState(props.lastName)
+  const [year, setYear] = useState(props.year);
+  const [make, setMake] = useState(props.make);
+  const [model, setModel] = useState(props.model);
+  const [price, setPrice] = useState(props.price);
+  const [personId, setPersonId] = useState(props.personId);
   const [editMode, setEditMode] = useState(false)
 
   const handleButtonClick = () => {
@@ -24,24 +27,45 @@ const Person = props => {
 
   const updateStateVariable = (variable, value) => {
     switch (variable) {
-      case 'firstName':
-        setFirstName(value)
+      case 'year':
+        setYear(value)
         break
-      case 'lastName':
-        setLastName(value)
+      case 'make':
+        setMake(value)
+        break
+      case 'model':
+        setModel(value)
+        break
+      case 'price':
+        setPrice(value)
+        break
+      case 'personId':
+        setPersonId(value)
         break
       default:
         break
     }
   }
 
+  const getFormattedCurrency = (price) => {
+    var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'CAD',
+    });
+
+    return formatter.format(price);
+  }
+
   return (
     <div>
       {editMode ? (
-        <UpdatePerson
+        <UpdateCar
           id={props.id}
-          firstName={props.firstName}
-          lastName={props.lastName}
+          year={props.year}
+          make={props.make}
+          model={props.model}
+          price={props.price}
+          personId={props.personId}
           onButtonClick={handleButtonClick}
           updateStateVariable={updateStateVariable}
         />
@@ -49,15 +73,15 @@ const Person = props => {
         <Card
           actions={[
             <EditOutlined key='edit' onClick={handleButtonClick} />,
-            <RemovePerson id={id} />
+            <RemoveCar id={id} />
           ]}
           style={styles.card}
         >
-          {firstName} {lastName}
+          {year} {make} {model} <b>{getFormattedCurrency(price)}</b>
         </Card>
       )}
     </div>
   )
 }
 
-export default Person
+export default Car

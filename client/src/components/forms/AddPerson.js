@@ -9,7 +9,7 @@ import { ADD_PERSON, GET_PEOPLE } from '../../queries'
 
 const AddPerson = () => {
   const [id] = useState(uuidv4())
-  const [addContact] = useMutation(ADD_PERSON)
+  const [addPerson] = useMutation(ADD_PERSON)
 
   const [form] = Form.useForm()
   const [, forceUpdate] = useState()
@@ -22,19 +22,19 @@ const AddPerson = () => {
   const onFinish = values => {
     const { firstName, lastName } = values
 
-    addContact({
+    addPerson({
       variables: {
         id,
         firstName,
         lastName
       },
-      update: (proxy, { data: { addContact } }) => {
+      update: (proxy, { data: { addPerson } }) => {
         const data = proxy.readQuery({ query: GET_PEOPLE })
         proxy.writeQuery({
           query: GET_PEOPLE,
           data: {
             ...data,
-            contacts: [...data.contacts, addContact]
+            peopls: [...data.peopls, addPerson]
           }
         })
       }
@@ -72,7 +72,7 @@ const AddPerson = () => {
               form.getFieldsError().filter(({ errors }) => errors.length).length
             }
           >
-            Add Contact
+            Add Person
           </Button>
         )}
       </Form.Item>
